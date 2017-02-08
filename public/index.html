@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        var routes = ['/control', '/a', '/b', '/c', '/d'];
+        var timeout = 200;
+        var numRequests = 3;
+        function runTests() {
+          routes.forEach((r) => {
+            test(r, function(headers, results){
+              updateDataTable(r, headers, results);
+            });
+          });
+        }
+        function test(url, success) {
+          var results = [];
+          var headers;
+          var requests = numRequests;
+          var update = function(data) {
+            if (headers == undefined || headers == null) {
+//              console.log('updating headers', data.headers);
+              headers = data.headers;
+            }
+            results.push(data.rand);
+          };
+          var doit = function() {
+            requests -= 1;
+            if (requests >= 0) {
+              getJson(url, function(data) {
+                console.log(data);
+                update(data);
+                setTimeout(doit, timeout);
+              });
+            }
+            else {
+//              console.log("Calling success function in doit");
+              success(headers, results);
+            }
+          };
+          doit();
+        }
+        function updateDataTable(url, headers, results) {
+          console.log(url, headers, results);
+        }
+        function getJson(url, success) {
+          $.ajax({
+            url: url,
+            dataType: 'json',
+            success: success
+          });
+        }
+    </script>
+</head>
+<body>
+    <h1>Cache Test</h1>
+    <p>These tests will iterate through several routes which have different header responses so you can see how
+    this browser responds when you create headers you hope are preventing caching.</p>
+    <button onclick="runTests();">Start Test</button>
+
+    <table id="results">
+        <thead>Success! (No Cache)</thead>
+        <thead>Headers</thead>
+        <thead>URL</thead>
+        <thead>Unique / Expected</thead>
+        <thead>Data</thead>
+    </table>
+
+</body>
+</html>

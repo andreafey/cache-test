@@ -1,0 +1,24 @@
+{
+  "name": "cache-test",
+  "version": "1.0.0",
+  "description": "API suite with JSON responses from different headers",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/andreafey/cache-test.git"
+  },
+  "author": "Andrea Fey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreafey/cache-test/issues"
+  },
+  "homepage": "https://github.com/andreafey/cache-test#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  }
+}
